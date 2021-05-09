@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 @SpringBootTest
 class EuniversityApplicationTests {
@@ -16,8 +17,7 @@ class EuniversityApplicationTests {
 
     @Test
     void contextLoads() throws SQLException {
-        System.out.println("++++++++++++>"+dataSource.getClass());
-        System.out.println("++++++++++++>"+dataSource.getConnection());
+        System.out.println(LocalDate.parse("2020-10-15"));
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -13,6 +14,6 @@ import java.sql.Timestamp;
 public class Problem {
     private int id;
     private String content;
-    private Timestamp time;
+    private LocalDate time;
     private String userPhone;
 }

@@ -8,5 +8,14 @@
         insert into user (phone, password, nikeName, gender, province, city, identity)
         values (#{phone},#{password},#{nikeName},#{gender},#{province},#{city},#{identity})
     </insert>
-
+    <select id="findUserByPhone" resultType="User">
+        select * from user where phone = #{phone}
+    </select>
+    <update id="updatePassword">
+        update user set password=#{password} where phone=#{phone}
+    </update>
+    <update id="updateProfileInformation">
+        update user set nikeName=#{nikeName},gender=#{gender},province=#{province},city=#{city},identity=#{identity}
+        where phone=#{phone}
+    </update>
 </mapper>
