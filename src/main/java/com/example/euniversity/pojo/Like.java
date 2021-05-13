@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class Like {
     private String userPhone;
     private int answerId;
-    private int like;
 }

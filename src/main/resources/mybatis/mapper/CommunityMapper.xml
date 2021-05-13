@@ -13,4 +13,35 @@
         insert into problem (content, time, userPhone)
         values (#{content},#{time},#{userPhone})
     </insert>
+    <select id="findUserProblem" resultType="Problem">
+        select * from problem where userPhone=#{userPhone}
+    </select>
+    <select id="findAnswerByUserPhone" resultType="Answer">
+        select * from answer where userPhone=#{userPhone}
+    </select>
+    <select id="findProblemById" resultType="Problem">
+        select * from problem where id=#{problemId}
+    </select>
+    <select id="findProblemByContent" resultType="Problem">
+        select * from problem where content regexp #{text}
+    </select>
+    <select id="findLike" resultType="Like">
+        select * from isliked where userPhone=#{userPhone} and answerId=#{answerId}
+    </select>
+    <insert id="addLike">
+        insert into isliked (userPhone, answerId) values (#{userPhone},#{answerId})
+    </insert>
+    <delete id="delLike">
+        delete from isliked where userPhone=#{userPhone} and answerId=#{answerId}
+    </delete>
+    <update id="updateAnswerLikes">
+        update answer set likes=#{likes} where id=#{answerId}
+    </update>
+    <insert id="addAnswer">
+        insert into answer (content, time, likes, userPhone, problemId)
+        values (#{content},#{time},0,#{userPhone},#{problemId})
+    </insert>
+    <update id="updateAnswer">
+        update answer set content=#{content},time=#{time} where id=#{answerId}
+    </update>
 </mapper>

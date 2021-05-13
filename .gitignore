@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### university image and logo ###
+src/main/resources/static/universityImage/
+src/main/resources/static/universityLogo/
