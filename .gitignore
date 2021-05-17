@@ -35,3 +35,4 @@ build/
 ### university image and logo ###
 src/main/resources/static/universityImage/
 src/main/resources/static/universityLogo/
+src/main/java/com/example/euniversity/service/SendSmsService.java
