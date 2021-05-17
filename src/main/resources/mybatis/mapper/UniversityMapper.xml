@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.euniversity.dao.UniversityMapper">
+    <select id="findUniversity" resultType="University">
+        select id,name,type,province,city,logo,f985,f211,dualClass
+        from university limit ${start},20
+    </select>
+    <select id="searchUniversity" resultType="University">
+        select id,name,type,province,city,logo,f985,f211,dualClass from university
+        where name regexp #{text} limit ${start},20
+    </select>
+    <select id="filterUniversity" resultType="University">
+        select id,name,type,province,city,logo,f985,f211,dualClass from university
+        where type in (${universityTypeString}) and level in (${universityLevelString})
+        and nature in (${universityNatureString}) and province in (${provinceString})
+        and f985 in (${f985String}) and f211 in (${f211String}) and dualclass in (${dualClassString}) limit ${start},20
+    </select>
+    <select id="findUniversityById" resultType="University">
+        select id,name,type,level,nature,province,city,url,logo,image,f985,f211,dualclass
+        from university where id=#{universityId}
+    </select>
+    <select id="findUniversityIntroductionById" resultType="String">
+        select introduction from university where id=#{universityId}
+    </select>
+    <select id="findUniversityScore" resultType="String">
+        select minGrade from universityscore where universityId=#{universityId} and
+        province=#{province} and division=#{division} and years=#{year}
+    </select>
+    <select id="findUniversityIdByName" resultType="int">
+        select id from university where name=#{universityName}
+    </select>
+</mapper>

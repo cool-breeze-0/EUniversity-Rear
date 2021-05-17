@@ -19,8 +19,8 @@ public class CommunityController {
     private CommunityService communityServce;
 
     @GetMapping(value = "/findAllProblemAnswer",produces = "application/json;charset=UTF-8")
-    public Result findAllProblemAnswer(){
-        return communityServce.findAllProblemAnswer();
+    public Result findAllProblemAnswer(int time){
+        return communityServce.findAllProblemAnswer(time);
     }
 
     @PostMapping(value = "/askProblem",produces = "application/json;charset=UTF-8")
@@ -56,21 +56,21 @@ public class CommunityController {
     }
 
     @GetMapping(value = "/qualitySortProblem",produces = "application/json;charset=UTF-8")
-    public Result qualitySortProblem(){
-        return communityServce.qualitySortProblem();
+    public Result qualitySortProblem(int time){
+        return communityServce.qualitySortProblem(time);
     }
 
     @GetMapping(value = "/comprehensiveSortProblem",produces = "application/json;charset=UTF-8")
-    public Result comprehensiveSortProblem(){
-        return communityServce.comprehensiveSortProblem();
+    public Result comprehensiveSortProblem(int time){
+        return communityServce.comprehensiveSortProblem(time);
     }
 
     @GetMapping(value = "/searchProblem",produces = "application/json;charset=UTF-8")
-    public Result searchProblem(String text){
+    public Result searchProblem(String text,int time){
         if(text.equals("")){
             return new Result(ResultEnum.INPUT_IS_NULL.getCode(),ResultEnum.INPUT_IS_NULL.getMsg(),null);
         }else{
-            return communityServce.searchProblem(text);
+            return communityServce.searchProblem(text,time);
         }
     }
 

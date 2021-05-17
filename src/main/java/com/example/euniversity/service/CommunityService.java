@@ -38,9 +38,9 @@ public class CommunityService {
         }
     }
 
-    public Result findAllProblemAnswer(){
+    public Result findAllProblemAnswer(int time){
         List<ProblemAnswer> problemAnswers = new ArrayList<ProblemAnswer>();
-        List<Problem> problems=communityMapper.findAllProblem();
+        List<Problem> problems=communityMapper.findAllProblemTimes((time-1)*10);
         if(problems.size()==0){
             return new Result(ResultEnum.NO_PROBLEMS_IN_DATABASE.getCode(),ResultEnum.NO_PROBLEMS_IN_DATABASE.getMsg(),null);
         }else{
@@ -135,7 +135,7 @@ public class CommunityService {
             // 这样返回到前端会再次逆序（默认的时间排序显示是直接将数据库中查询的所有问题逆序实现的，数据库提问时间越早越在前面）
             // 显示，就可以将问题的所有点赞量总和的值更大的放在前面了
             Collections.sort(sortProblems);
-            for (int i=5;i>=0;i--){
+            for (int i=0;i<=5;i++){
                 commonProblemAnswers.add(sortProblems.get(i).problemAnswer);
             }
             return commonProblemAnswers;
@@ -146,7 +146,7 @@ public class CommunityService {
      *将所有问题按问题的回答的点赞量的最大值排序
      * @return
      */
-    public Result qualitySortProblem(){
+    public Result qualitySortProblem(int time){
         List<ProblemAnswer> problemAnswers = new ArrayList<ProblemAnswer>();
         List<ProblemAnswer> qualitySortProblemAnswers;
         List<Problem> problems=communityMapper.findAllProblem();
@@ -158,6 +158,14 @@ public class CommunityService {
                 problemAnswers.add(new ProblemAnswer(problems.get(i),answers));
             }
             qualitySortProblemAnswers=qualitySortAllProblem(problemAnswers);
+            if(qualitySortProblemAnswers.size()>10*(time-1)) {
+                if(qualitySortProblemAnswers.size()>10*(time))
+                    qualitySortProblemAnswers = qualitySortProblemAnswers.subList((time - 1) * 10, time * 10);
+                else
+                    qualitySortProblemAnswers = qualitySortProblemAnswers.subList((time - 1) * 10, qualitySortProblemAnswers.size());
+            }else {
+                return new Result(ResultEnum.NO_PROBLEMS_IN_DATABASE.getCode(),ResultEnum.NO_PROBLEMS_IN_DATABASE.getMsg(),null);
+            }
             return new Result(ResultEnum.FIND_SUCCESS.getCode(),ResultEnum.FIND_SUCCESS.getMsg(),qualitySortProblemAnswers);
         }
     }
@@ -181,7 +189,7 @@ public class CommunityService {
         // 这样返回到前端会再次逆序（默认的时间排序显示是直接将数据库中查询的所有问题逆序实现的，数据库提问时间越早越在前面）
         // 显示，就可以将问题的回答的点赞量的最大值更大的放在前面了
         Collections.sort(sortProblems);
-        for(int i=sortProblems.size()-1;i>=0;i--){
+        for(int i=0;i<sortProblems.size();i++){
             qualitySortProblemAnswers.add(sortProblems.get(i).problemAnswer);
         }
         return qualitySortProblemAnswers;
@@ -191,7 +199,7 @@ public class CommunityService {
      * 将所有问题按时间和问题的回答的点赞量的最大值综合排序
      * @return
      */
-    public Result comprehensiveSortProblem(){
+    public Result comprehensiveSortProblem(int time){
         List<ProblemAnswer> problemAnswers = new ArrayList<ProblemAnswer>();
         List<ProblemAnswer> comprehensiveSortProblemAnswers;
         List<Problem> problems=communityMapper.findAllProblem();
@@ -203,6 +211,14 @@ public class CommunityService {
                 problemAnswers.add(new ProblemAnswer(problems.get(i),answers));
             }
             comprehensiveSortProblemAnswers=comprehensiveSortAllProblem(problemAnswers);
+            if(comprehensiveSortProblemAnswers.size()>10*(time-1)) {
+                if(comprehensiveSortProblemAnswers.size()>10*(time))
+                    comprehensiveSortProblemAnswers = comprehensiveSortProblemAnswers.subList((time - 1) * 10, time * 10);
+                else
+                    comprehensiveSortProblemAnswers = comprehensiveSortProblemAnswers.subList((time - 1) * 10, comprehensiveSortProblemAnswers.size());
+            }else {
+                return new Result(ResultEnum.NO_PROBLEMS_IN_DATABASE.getCode(),ResultEnum.NO_PROBLEMS_IN_DATABASE.getMsg(),null);
+            }
             return new Result(ResultEnum.FIND_SUCCESS.getCode(),ResultEnum.FIND_SUCCESS.getMsg(),comprehensiveSortProblemAnswers);
         }
     }
@@ -233,15 +249,15 @@ public class CommunityService {
         // 这样返回到前端会再次逆序（默认的时间排序显示是直接将数据库中查询的所有问题逆序实现的，数据库提问时间越早越在前面）
         // 显示，就可以将问题的flags值更大的放在前面了
         Collections.sort(sortProblems);
-        for(int i=sortProblems.size()-1;i>=0;i--){
+        for(int i=0;i<sortProblems.size();i++){
             comprehensiveSortProblemAnswers.add(sortProblems.get(i).problemAnswer);
         }
         return comprehensiveSortProblemAnswers;
     }
 
-    public Result searchProblem(String text){
+    public Result searchProblem(String text,int time){
         List<ProblemAnswer> problemAnswers = new ArrayList<ProblemAnswer>();
-        List<Problem> problems=communityMapper.findProblemByContent(text);
+        List<Problem> problems=communityMapper.findProblemByContent(text,(time-1)*10);
         if(problems.size()==0){
             return new Result(ResultEnum.FIND_PROBLEM_FAILE.getCode(),ResultEnum.FIND_PROBLEM_FAILE.getMsg(),problemAnswers);
         }else{

@@ -17,7 +17,7 @@ class EuniversityApplicationTests {
 
     @Test
     void contextLoads() throws SQLException {
-        System.out.println(LocalDate.parse("2020-10-15"));
+        System.out.println("\"综合\"");
     }
 
 }

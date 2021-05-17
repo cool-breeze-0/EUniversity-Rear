@@ -66,4 +66,13 @@ public class UserController {
             return userService.updateProfileInformation(phone, nikeName, gender, province, city, identity);
         }
     }
+
+    @GetMapping(value = "/sendSms",produces = "application/json;charset=UTF-8")
+    public Result sendSms(String phone){
+        if(phone.equals("")){
+            return new Result(ResultEnum.INPUT_IS_NULL.getCode(),ResultEnum.INPUT_IS_NULL.getMsg(),null);
+        }else{
+            return userService.sendSms(phone);
+        }
+    }
 }

@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
+    @Autowired
+    private SendSmsService sendSmsService;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -75,6 +79,16 @@ public class UserService {
             return new Result(ResultEnum.UPDATE_PROFILE_INFORMATION_SUCCESS.getCode(),ResultEnum.UPDATE_PROFILE_INFORMATION_SUCCESS.getMsg(),null);
         }else{
             return new Result(ResultEnum.UPDATE_PROFILE_INFORMATION_FAILD.getCode(),ResultEnum.UPDATE_PROFILE_INFORMATION_FAILD.getMsg(),null);
+        }
+    }
+
+    public Result sendSms(String phone){
+        String code= UUID.randomUUID().toString().substring(0,4);
+        boolean isSend= sendSmsService.send(phone,code);
+        if(isSend){
+            return new Result(ResultEnum.SEND_SUCCESS.getCode(),ResultEnum.SEND_SUCCESS.getMsg(),Arrays.asList(code));
+        }else{
+            return new Result(ResultEnum.SEND_FAILD.getCode(),ResultEnum.SEND_FAILD.getMsg(),null);
         }
     }
 }

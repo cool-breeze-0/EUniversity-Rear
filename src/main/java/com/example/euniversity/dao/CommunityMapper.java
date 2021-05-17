@@ -14,6 +14,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CommunityMapper {
+    List<Problem> findAllProblemTimes(int start);
     List<Problem> findAllProblem();
     List<Answer> findAnswerByProblemId(int problemId);
 
@@ -25,7 +26,10 @@ public interface CommunityMapper {
 
     Problem findProblemById(int problemId);
 
-    List<Problem> findProblemByContent(String text);
+    List<Problem> findProblemByContent(
+            @Param("text") String text,
+            @Param("start") int start
+    );
 
     Like findLike(@Param("userPhone")String userPhone,@Param("answerId") int answerId);
 

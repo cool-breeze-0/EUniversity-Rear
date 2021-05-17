@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.euniversity.dao.CommunityMapper">
+    <select id="findAllProblemTimes" resultType="Problem">
+        select * from problem order by time desc limit ${start},10
+    </select>
     <select id="findAllProblem" resultType="Problem">
         select * from problem
     </select>
@@ -14,16 +17,16 @@
         values (#{content},#{time},#{userPhone})
     </insert>
     <select id="findUserProblem" resultType="Problem">
-        select * from problem where userPhone=#{userPhone}
+        select * from problem where userPhone=#{userPhone} order by time desc
     </select>
     <select id="findAnswerByUserPhone" resultType="Answer">
-        select * from answer where userPhone=#{userPhone}
+        select * from answer where userPhone=#{userPhone} order by time desc
     </select>
     <select id="findProblemById" resultType="Problem">
         select * from problem where id=#{problemId}
     </select>
     <select id="findProblemByContent" resultType="Problem">
-        select * from problem where content regexp #{text}
+        select * from problem where content regexp #{text} order by time desc limit ${start},10
     </select>
     <select id="findLike" resultType="Like">
         select * from isliked where userPhone=#{userPhone} and answerId=#{answerId}
